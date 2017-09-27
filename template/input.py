@@ -43,6 +43,10 @@ def generate_text_input_fn(file_names,
 
     features = parser_fn(rows)
 
+    # Remove unused columns
+    for col in metadata.UNUSED_FEATURE_NAMES:
+        features.pop(col)
+
     if shuffle:
         features = tf.train.shuffle_batch(
             features,

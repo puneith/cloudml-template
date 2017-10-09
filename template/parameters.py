@@ -95,6 +95,16 @@ def initialise_arguments(args_parser):
         required=True
     )
 
+    args_parser.add_argument(
+        '--reuse-job-dir',
+        action='store_true',
+        default=False,
+        help="""\
+            Flag to decide if the model checkpoint should
+            be re-used from the job-dir. If False then the
+            job-dir will be deleted"""
+    )
+
     # Experiment arguments
     args_parser.add_argument(
         '--eval-delay-secs',

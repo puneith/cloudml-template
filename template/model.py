@@ -1,7 +1,7 @@
 import tensorflow as tf
 import featurizer
 import parameters
-import serving
+import metadata
 
 
 def create_classifier(config):
@@ -24,6 +24,8 @@ def create_classifier(config):
     dnn_optimizer = tf.train.AdagradOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
 
     classifier = tf.contrib.learn.DNNLinearCombinedClassifier(
+
+        n_classes= len(metadata.TARGET_LABELS),
 
         linear_optimizer= linear_optimizer,
         linear_feature_columns=wide_columns,

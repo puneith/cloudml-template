@@ -1,13 +1,7 @@
 trainingInput:
-#  scaleTier: CUSTOM
-#  masterType: complex_model_m | complex_model_m_gpu
-#  workerType: complex_model_m | complex_model_m_gpu
-#  parameterServerType: large_model
-#  workerCount: 9
-#  parameterServerCount: 3
   scaleTier: BASIC
   hyperparameters:
-    goal: MINIMIZE #MINIMIZE -> loss | MAXIMIZE -> accuracy
+    goal: MINIMIZE
     maxTrials: 10
     maxParallelTrials: 1
     params:

@@ -4,7 +4,6 @@ import model
 import input
 import custom
 
-
 def get_eval_metrics():
 
     if metadata.TASK_TYPE == "regression":

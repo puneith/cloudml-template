@@ -22,7 +22,7 @@ def json_serving_input_fn():
 
     if metadata.TASK_TYPE == "custom":
         return tf.estimator.export.ServingInputReceiver(
-            preprocess.process_features(features), inputs)
+            features=preprocess.process_features(features), receiver_tensors=inputs)
 
     return tf.contrib.learn.InputFnOps(
         preprocess.process_features(features),

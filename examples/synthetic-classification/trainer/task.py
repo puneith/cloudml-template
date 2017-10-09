@@ -1,10 +1,8 @@
 import argparse
 import os
-import json
 
 import tensorflow as tf
-from tensorflow.contrib.learn.python.learn import learn_runner
-from tensorflow.contrib.learn.python.learn.estimators import run_config
+from tensorflow.contrib.learn import learn_runner
 from tensorflow.contrib.learn.python.learn.utils import (saved_model_export_utils)
 from tensorflow.contrib.training.python.training import hparam
 
@@ -29,6 +27,16 @@ def main():
     # Directory to store output model and checkpoints
     output_dir = args.job_dir
 
+    # If job_dir_reuse is False then remove the job_dir if it exists
+    if not args.reuse_job_dir:
+        if tf.gfile.Exists(args.job_dir):
+            tf.gfile.DeleteRecursively(args.job_dir)
+            tf.logging.info("Deleted job_dir {} to avoid re-use".format(args.job_dir))
+        else:
+            tf.logging.info("No job_dir available to delete")
+    else:
+        tf.logging.info("Reusing job_dir {} if it exists".format(args.job_dir))
+
     # Run the training experiment
     learn_runner.run(
         experiment.generate_experiment_fn(
@@ -42,7 +50,11 @@ def main():
                 default_output_alternative_key=None,
             )]
         ),
-        run_config=run_config.RunConfig(model_dir=output_dir),
+        run_config=tf.contrib.learn.RunConfig(
+            model_dir=output_dir,
+            log_device_placement=True
+        ),
+        schedule="train_and_evaluate",
         hparams=parameters.HYPER_PARAMS
     )
 

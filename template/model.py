@@ -2,6 +2,7 @@ import tensorflow as tf
 import featurizer
 import parameters
 import metadata
+import custom
 
 
 def create_classifier(config):
@@ -101,3 +102,8 @@ def construct_hidden_units():
         hidden_units = parameters.HYPER_PARAMS.hidden_units
 
     return hidden_units
+
+
+def create_estimator(config):
+    return tf.estimator.Estimator(model_fn=custom.generate_regression_model_fn, params=parameters.HYPER_PARAMS, config=config)
+

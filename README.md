@@ -1,5 +1,7 @@
 # Cloud ML Engine - Trainer Package Template
 
+## Tensorflow v1.2
+
 ### Repository Structure
 1. **template**: includes all the python module files to adapt to your data to build the ML trainer.
 

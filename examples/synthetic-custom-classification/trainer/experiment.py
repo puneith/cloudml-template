@@ -76,7 +76,7 @@ def generate_experiment_fn(**experiment_args):
                 config=run_config
             )
         else:
-            estimator = custom.create_estimator(
+            estimator = model.create_estimator(
                 config=run_config
             )
 

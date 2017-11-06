@@ -39,15 +39,14 @@ def main():
 
     # Run the training experiment
     learn_runner.run(
-        experiment.generate_experiment_fn(
+        experiment_fn=experiment.generate_experiment_fn(
             min_eval_frequency=args.min_eval_frequency,
             eval_delay_secs=args.eval_delay_secs,
             train_steps=args.train_steps,
             eval_steps=args.eval_steps,
             export_strategies=[saved_model_export_utils.make_export_strategy(
                 serving.SERVING_FUNCTIONS[args.export_format],
-                exports_to_keep=1,
-                default_output_alternative_key=None,
+                exports_to_keep=1
             )]
         ),
         run_config=tf.contrib.learn.RunConfig(

@@ -2,7 +2,7 @@
 TASK_TYPE = ''
 
 # the header (all column names) of the input data file(s)
-HEADERS = []
+HEADER = []
 
 # the default values of all the columns of the input data, to help TF detect the data types of the columns
 HEADER_DEFAULTS = []
@@ -30,4 +30,4 @@ TARGET_NAME = ''
 TARGET_LABELS = []
 
 # column to be ignores (e.g. keys, constants, etc.)
-UNUSED_FEATURE_NAMES = []
+UNUSED_FEATURE_NAMES = list(set(HEADER) - set(FEATURE_NAMES) - {TARGET_NAME})

@@ -26,9 +26,10 @@ def create_classifier(config):
 
     classifier = tf.contrib.learn.DNNLinearCombinedClassifier(
 
-        n_classes= len(metadata.TARGET_LABELS),
+        n_classes=len(metadata.TARGET_LABELS),
+        label_vocabulary=metadata.TARGET_LABELS,
 
-        linear_optimizer= linear_optimizer,
+        linear_optimizer=linear_optimizer,
         linear_feature_columns=wide_columns,
 
         dnn_feature_columns=deep_columns,
@@ -66,7 +67,7 @@ def create_regressor(config):
 
     regressor = tf.contrib.learn.DNNLinearCombinedRegressor(
 
-        linear_optimizer= linear_optimizer,
+        linear_optimizer=linear_optimizer,
         linear_feature_columns=wide_columns,
 
         dnn_feature_columns=deep_columns,
@@ -105,5 +106,5 @@ def construct_hidden_units():
 
 
 def create_estimator(config):
-    return tf.estimator.Estimator(model_fn=custom.generate_regression_model_fn, params=parameters.HYPER_PARAMS, config=config)
+    return tf.estimator.Estimator(model_fn=custom.regression_model_fn, params=parameters.HYPER_PARAMS, config=config)
 

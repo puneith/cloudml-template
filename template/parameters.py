@@ -40,7 +40,7 @@ def initialise_arguments(args_parser):
         default=40
     )
 
-    # Preprocessing arguments
+    # features processing arguments
     args_parser.add_argument(
         '--num-buckets',
         help='Number of buckets into which to discretize numeric columns',
@@ -151,7 +151,6 @@ def initialise_arguments(args_parser):
         ],
         default='INFO',
     )
-
 
     args = args_parser.parse_args()
 

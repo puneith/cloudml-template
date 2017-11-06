@@ -1,8 +1,7 @@
 import tensorflow as tf
 import metadata
 import featurizer
-import parsers
-import preprocess
+import input
 
 
 def json_serving_input_fn():
@@ -22,10 +21,10 @@ def json_serving_input_fn():
 
     if metadata.TASK_TYPE == "custom":
         return tf.estimator.export.ServingInputReceiver(
-            preprocess.process_features(features), inputs)
+            input.process_features(features), inputs)
 
     return tf.contrib.learn.InputFnOps(
-        preprocess.process_features(features),
+        input.process_features(features),
         None,
         inputs
     )
@@ -38,16 +37,15 @@ def csv_serving_input_fn():
         dtype=tf.string
     )
 
-    features = parsers.parse_csv(csv_row)
-    features.pop(metadata.TARGET_NAME)
+    features = input.parse_csv_row(csv_row, is_serving=True)
 
     if metadata.TASK_TYPE == "custom":
         return tf.estimator.export.ServingInputReceiver(
-            features=preprocess.process_features(features), receiver_tensors={'csv_row': csv_row}
+            features=input.process_features(features), receiver_tensors={'csv_row': csv_row}
         )
 
     return tf.contrib.learn.InputFnOps(
-        preprocess.process_features(features),
+        input.process_features(features),
         None,
         {'csv_row': csv_row}
     )
@@ -74,10 +72,10 @@ def example_serving_input_fn():
 
     if metadata.TASK_TYPE == "custom":
         return tf.estimator.export.ServingInputReceiver(
-            features=preprocess.process_features(features), receiver_tensors={'example_proto': example_bytestring})
+            features=input.process_features(features), receiver_tensors={'example_proto': example_bytestring})
 
     return tf.contrib.learn.InputFnOps(
-        preprocess.process_features(features),
+        input.process_features(features),
         None,  # labels
         {'example_proto': example_bytestring}
     )

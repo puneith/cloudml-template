@@ -32,12 +32,11 @@ and 3) deploy the model on GCP as well as to make prediction (inference) using t
 
 ### Featurizer - defining deep and wide columns
 
-* numeric_olumns &rarr; **dense_columns** (int and float features)
+* numeric_columns & embedding_columns &rarr; **dense_columns** (int and float features)
 * categorical_columns_with_vocabolary_list & bucketized_columns &rarr; **categorical_columns** (low-cardinality categorical features)
 * categorical_columns_with_hash_buckets & crossed_columns &rarr; **sparse_columns** (high-cardinality categorical features)
 
 * categorical_columns &rarr; **indicator_columns** (one-hot encoding)
-* sparse_columns &rarr; **embedding_columns** (dimensionality reduction w.r.t. embedding_size)
 
-* **deep_columns** = *dense_columns* + *indicator_columns* + *embedding_columns*
+* **deep_columns** = *dense_columns* + *indicator_columns*
 * **wide_columns** = *categorical_columns* + *sparse_columns*

@@ -31,11 +31,11 @@ and 3) deploy the model on GCP as well as to make prediction (inference) using t
 |File Name| Purpose| Do You Need to Change?
 |:---|:---|:---
 |metadata.py|Defines: 1) Task type, 2) input data header, 2) numeric and categorical feature names,  4) target feature name, and 5) unused feature names  | **Yes**, as you will need to specify the metadata of your dataset 
-|input.py| Includes 1) data input functions to read data from csv and tfrecords files, 2) parsing functions to convert csv and tf.example to tensors, and 2) a function to implement your custom pre-processing functionality| **Maybe**, if implement any custom pre-processing during reading data.
+|input.py| Includes 1) data input functions to read data from csv and tfrecords files, 2) parsing functions to convert csv and tf.example to tensors, and 2) a function to implement your custom pre-processing functionality| **Maybe**, if you want to implement any custom pre-processing during reading data.
 |featurizer.py| 1) Creates tensorflow feature_column(s) based on the dataset metadata (and other extended feature columns, e.g. bucketisation, crossing, embedding, etc.), and 2) creates deep and wide feature column lists. | **Maybe**, if you want to create your custom feature_column(s) and/or change how deep and wide columns are defined (see next section). 
-|model.py|Includes functions to create DNNLinearCombinedRegressor and DNNLinearCombinedClassifier, based on the hyper-parameters in the parameters.py module.|**Probably No, unless** you want to change something in the estimator, e.g., activation functions, optimizers, etc. 
+|model.py|Includes functions to create DNNLinearCombinedRegressor and DNNLinearCombinedClassifier, based on the hyper-parameters in the parameters.py module.|**No, unless** you want to change something in the estimator, e.g., activation functions, optimizers, etc. 
 |serving.py|Includes serving functions that accepts CSV, JSON, and tf.example instances.| **No**
-|parameters.py|Includes the function to parse and initialize the arguments, as well as maintaining the hyper-parameters (hparam object).| **Probably No, unless** you want to change/add parameters (e.g. for feature engineering). 
+|parameters.py|Includes the function to parse and initialize the arguments, as well as maintaining the hyper-parameters (hparam object).| **No, unless** you want to change/add parameters (e.g. for feature engineering). 
 |task.py|Entry point to the trainer. Defines TrainSpec, EvalSpec, and execute the model training.| **No**
 
 

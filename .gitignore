@@ -1,6 +1,3 @@
-.idea/
-.idea/preferred-vcs.xml
-.idea/workspace.xml
 mle-tf1.4/mle-tf1.4-env
 mle-tf1.4/.idea
 mle-tf1.4/examples/census-classification/trained_models

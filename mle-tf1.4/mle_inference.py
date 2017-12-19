@@ -7,6 +7,7 @@ VERSION = 'your.model.version'  # change to your model version
 
 
 def estimate(project, model_name, version, instances):
+
     credentials = GoogleCredentials.get_application_default()
     api = discovery.build('ml', 'v1', credentials=credentials,
                           discoveryServiceUrl='https://storage.googleapis.com/cloud-ml/discovery/ml_v1_discovery.json')
@@ -20,7 +21,7 @@ def estimate(project, model_name, version, instances):
 
 
 ##############################################
-# WRITE YOUR PREDICTION TEST HERE
+# WRITE YOUR MODEL PREDICTION TEST HERE
 ##############################################
 
 # list dictionary items of serving with json,

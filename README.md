@@ -1,4 +1,4 @@
-# Cloud ML Engine - Trainer Package Template
+# Cloud ML Engine - TF Trainer Package Template
 
 The purpose of this repository is to provide a template of how you can package a TensorFlow training model to submit it to Cloud ML Engine. 
 The template makes it easier to organise your code, and to adapt it to your dataset. In more details, the template covers the following functionality:

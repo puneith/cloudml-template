@@ -2,7 +2,6 @@
 # YOU MAY MODIFY THIS MODULE TO ADD/REMOVE PARAMS OR CHANGE THE DEFAULT VALUES
 # ****************************************************************************
 
-
 HYPER_PARAMS = None
 
 

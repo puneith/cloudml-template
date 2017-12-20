@@ -103,7 +103,7 @@ def create_estimator(config):
         Estimator
     """
 
-    def _model_fn(features, labels, mode, params):
+    def _model_fn(features, labels, mode):
         """ model function for the custom estimator"""
 
         hidden_units = construct_hidden_units()
@@ -156,7 +156,7 @@ def create_estimator(config):
         if mode == tf.estimator.ModeKeys.TRAIN:
             # Create Optimiser
             optimizer = tf.train.AdamOptimizer(
-                learning_rate=params.learning_rate)
+                learning_rate=parameters.HYPER_PARAMS.learning_rate)
 
             # Create training operation
             train_op = optimizer.minimize(
@@ -181,7 +181,6 @@ def create_estimator(config):
     print("creating a custom model...")
 
     return tf.estimator.Estimator(model_fn=_model_fn,
-                                  params=parameters.HYPER_PARAMS,
                                   config=config)
 
 

@@ -4,3 +4,4 @@ mle-tf1.4/examples/census-classification/trained_models
 mle-tf1.4/mle_inference_test.py
 mle-tf1.4/examples/housing-regression/trained_models
 mle-tf1.4/template/__pycache__
+mle-tf1.4/examples/babyweight-custom/trained_models

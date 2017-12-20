@@ -89,7 +89,7 @@ def create_regressor(config):
         config=config,
     )
 
-    print("creating a regression: {}".format(regressor))
+    print("creating a regression model: {}".format(regressor))
 
     return regressor
 
@@ -109,7 +109,7 @@ def create_estimator(config):
         # Create input layer based on features
         # input_layer = None
 
-        # Create hidden layers (cnn, rnn, dropouts, etc.) given the input layer
+        # Create hidden layers (dense, fully_connected, cnn, rnn, dropouts, etc.) given the input layer
         # hidden_layers = None
 
         # Create output layer given the hidden layers
@@ -134,7 +134,7 @@ def create_estimator(config):
         train_op = optimizer.minimize(
             loss=loss, global_step=tf.train.get_global_step())
 
-        # Specify the evaluation metric
+        # Specify additional evaluation metrics
         eval_metric_ops = None
 
         # Provide an estimator spec
@@ -146,6 +146,8 @@ def create_estimator(config):
                                                     export_outputs=export_outputs
                                                     )
         return estimator_spec
+
+    print("creating a custom estimator")
 
     return tf.estimator.Estimator(model_fn=_model_fn,
                                   params=parameters.HYPER_PARAMS,

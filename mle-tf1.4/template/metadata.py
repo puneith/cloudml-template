@@ -3,7 +3,7 @@
 # ************************************************************************
 
 # task type can be either 'classification' or 'regression', based on the target feature in the dataset
-TASK_TYPE = ''  # classification | regression
+TASK_TYPE = ''  # classification | regression | custom
 
 # list of all the columns (header) of the input data file(s)
 HEADER = []

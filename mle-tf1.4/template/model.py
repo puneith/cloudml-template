@@ -1,6 +1,8 @@
 # ************************************************************************************
 # YOU MAY MODIFY THIS MODULE TO USE DIFFERENT ESTIMATORS OR CONFIGURE THE CURRENT ONES
 # ************************************************************************************
+# YOU NEED TO MODIFY THIS MODULE IF YOU WANT TO IMPLEMENT A CUSTOM ESTIMATOR
+# ************************************************************************************
 
 import tensorflow as tf
 
@@ -90,6 +92,64 @@ def create_regressor(config):
     print("creating a regression: {}".format(regressor))
 
     return regressor
+
+
+def create_estimator(config):
+    """ Create a custom estimator based on _model_fn
+
+    Args:
+        config - used for model directory
+    Returns:
+        Estimator
+    """
+
+    def _model_fn(features, labels, mode, params):
+        """ model function for the custom estimator"""
+
+        # Create input layer based on features
+        # input_layer = None
+
+        # Create hidden layers (cnn, rnn, dropouts, etc.) given the input layer
+        # hidden_layers = None
+
+        # Create output layer given the hidden layers
+        # output_layer = None
+
+        # Specify the model output (i.e. predictions) given the output layer
+        predictions = None
+
+        # Specify the export output based on the predictions
+        export_outputs = {
+            'predictions': tf.estimator.export.PredictOutput(predictions)
+        }
+
+        # Calculate loss based on output and labels
+        loss = None
+
+        # Create Optimiser
+        optimizer = tf.train.AdamOptimizer(
+            learning_rate=params.learning_rate)
+
+        # Create training operation
+        train_op = optimizer.minimize(
+            loss=loss, global_step=tf.train.get_global_step())
+
+        # Specify the evaluation metric
+        eval_metric_ops = None
+
+        # Provide an estimator spec
+        estimator_spec = tf.estimator.EstimatorSpec(mode=mode,
+                                                    loss=loss,
+                                                    train_op=train_op,
+                                                    eval_metric_ops=eval_metric_ops,
+                                                    predictions=predictions,
+                                                    export_outputs=export_outputs
+                                                    )
+        return estimator_spec
+
+    return tf.estimator.Estimator(model_fn=_model_fn,
+                                  params=parameters.HYPER_PARAMS,
+                                  config=config)
 
 
 def construct_hidden_units():

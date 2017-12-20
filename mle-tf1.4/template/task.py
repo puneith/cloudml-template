@@ -76,7 +76,9 @@ def run_experiment(run_config):
             config=run_config
         )
     else:
-        estimator = None
+        estimator = model.create_estimator(
+            config=run_config
+        )
 
     # train and evaluate
     tf.estimator.train_and_evaluate(

@@ -47,7 +47,7 @@ def create_classifier(config):
         config=config,
     )
 
-    print("training a classifier: {}".format(classifier))
+    print("creating a classification model: {}".format(classifier))
 
     return classifier
 
@@ -87,7 +87,7 @@ def create_regressor(config):
         config=config,
     )
 
-    print("training a regressor: {}".format(regressor))
+    print("creating a regression model: {}".format(regressor))
 
     return regressor
 

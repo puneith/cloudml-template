@@ -6,6 +6,7 @@ The template makes it easier to organise your code, and to adapt it to your data
 * Standard implementation of input, parsing, and serving functions
 * Feature columns creation based on the metadata
 * Wide and Deep model creation using canned estimators
+* Create custom estimator using standardised model_fn
 * Train, evaluate, and export the model
 * Parameterisation of the experiment
 
@@ -16,8 +17,9 @@ Although the template provides standard implementation to different functionalit
 ### Repository Structure
 1. **template**: includes all the python module files to adapt to your data to build the ML trainer.
 
-2. **examples**: currently includes two examples, 1) classification, using the [Census Income](https://archive.ics.uci.edu/ml/datasets/Census+Income) dataset, and 2) regression, using the [House Pricing](https://www.kaggle.com/apratim87/housingdata/data) dataset 
-The examples show how the template is adapted given a dataset. The datasets are found in the examples' folders
+2. **examples**: currently 3 examples are included, 1) classification, using the [Census Income](https://archive.ics.uci.edu/ml/datasets/Census+Income) dataset, 2) regression, using the [House Pricing](https://www.kaggle.com/apratim87/housingdata/data) dataset,
+and 3) regression, with a custom estimator, using [Natality Baby Weight](https://catalog.data.gov/dataset?tags=birth-weight) dataset.
+The examples show how the template is adapted given a dataset. The datasets are found in the examples' folders.
 
 
 3. **scripts**: includes scripts to 1) train the model locally, 2) train the model on Cloud ML Engine, 

@@ -2,7 +2,6 @@
 # YOU NEED NOT TO CHANGE THIS MODULE
 # ****************************************************************************
 
-
 import tensorflow as tf
 
 import metadata

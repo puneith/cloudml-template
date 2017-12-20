@@ -2,7 +2,6 @@
 # YOU MAY MODIFY THIS MODULE TO USE DIFFERENT ESTIMATORS OR CONFIGURE THE CURRENT ONES
 # ************************************************************************************
 
-
 import tensorflow as tf
 
 import featurizer

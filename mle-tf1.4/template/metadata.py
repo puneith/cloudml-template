@@ -2,7 +2,6 @@
 # YOU NEED TO MODIFY THE META DATA TO ADAPT THE TRAINER TEMPLATE YOUR DATA
 # ************************************************************************
 
-
 # task type can be either 'classification' or 'regression', based on the target feature in the dataset
 TASK_TYPE = ''  # classification | regression
 

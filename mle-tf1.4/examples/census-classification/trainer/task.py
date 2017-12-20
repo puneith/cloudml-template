@@ -7,7 +7,6 @@ import argparse
 from datetime import datetime
 
 import tensorflow as tf
-from tensorflow.contrib.training.python.training import hparam
 
 import metadata
 import input
@@ -59,14 +58,14 @@ def run_experiment(run_config):
     )
 
     print("* experiment configurations")
-    print("==========================")
+    print("===========================")
     print("Train size: {}".format(parameters.HYPER_PARAMS.train_size))
     print("Epoch count: {}".format(parameters.HYPER_PARAMS.num_epochs))
     print("Train batch size: {}".format(parameters.HYPER_PARAMS.train_batch_size))
     print("Training steps: {} ({})".format(int(train_steps),
                                            "supplied" if parameters.HYPER_PARAMS.train_size is None else "computed"))
     print("Evaluate every {} seconds".format(parameters.HYPER_PARAMS.eval_every_secs))
-    print("==========================")
+    print("===========================")
 
     if metadata.TASK_TYPE == "classification":
         estimator = model.create_classifier(
@@ -91,7 +90,7 @@ def run_experiment(run_config):
 def main():
     args_parser = argparse.ArgumentParser()
     args = parameters.initialise_arguments(args_parser)
-    parameters.HYPER_PARAMS = hparam.HParams(**args.__dict__)
+    parameters.HYPER_PARAMS = args
 
     print('')
     print('Hyper-parameters:')

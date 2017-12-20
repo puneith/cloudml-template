@@ -10,7 +10,7 @@ trainingInput:
 ######### example of hyper-parameter tuning config ##############
 #  hyperparameters:
 #    goal: MINIMIZE #MINIMIZE -> loss | MAXIMIZE -> accuracy
-#    maxTrials: 10
+#    maxTrials: 15
 #    maxParallelTrials: 1
 #    params:
 #    - parameterName: num-layers

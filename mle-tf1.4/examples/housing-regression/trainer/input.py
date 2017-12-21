@@ -3,6 +3,7 @@
 # **************************************************************************
 
 import json
+import os
 import multiprocessing
 
 import tensorflow as tf
@@ -189,13 +190,25 @@ def load_feature_stats():
     load numeric column pre-computed statistics (mean, stdv, min, max, etc.)
     in order to be used for scaling/stretching numeric columns
 
+    In practice, the statistics of large dataset are computed proior to model training,
+    using dataflow (beam), dataproc (spark), BigQuery, etc.
+
+    The stats are then saved to gcs location. The location is passed to package are an arg.
+    Then in this function, the file is downloaded - via gsutil -  and loaded to be used.
+
+    The following code assumes that the stats.json file is already available locally.
+
     Returns:
+        A dict{string: float}, where key is the name of the stat
     """
 
     feature_stats = None
     try:
-        feature_stats = json.load("stats.json")
+        with open("../data/stats.json") as file:
+            content = file.read()
+        feature_stats = json.loads(content)
         print("INFO:feature stats were successfully loaded from local file...")
     except:
         print("WARN:couldn't load feature stats. numerical columns will not be normalised...")
+
     return feature_stats

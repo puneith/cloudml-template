@@ -4,7 +4,7 @@ The purpose of this repository is to provide a template of how you can package a
 The template makes it easier to organise your code, and to adapt it to your dataset. In more details, the template covers the following functionality:
 * Metadata to define your dataset, along with the problem type (classification vs regression)
 * Standard implementation of input, parsing, and serving functions
-* Feature columns creation based on the metadata
+* Feature columns creation based on the metadata (and normalisation stats)
 * Wide and Deep model creation using canned estimators
 * Create custom estimator using standardised model_fn
 * Train, evaluate, and export the model

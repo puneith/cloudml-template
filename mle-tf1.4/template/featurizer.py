@@ -1,3 +1,19 @@
+#!/usr/bin/env python
+
+# Copyright 2017 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # **************************************************************************
 # YOU MAY IMPLEMENT extend_feature_columns FUCNTION TO ADD EXTENDED FEATURES
 # **************************************************************************
@@ -6,12 +22,17 @@ import tensorflow as tf
 from tensorflow.python.feature_column import feature_column
 
 import metadata
+import parameters
 import input
 
 
 def extend_feature_columns(feature_columns):
-    """ Use to define additional feature columns, such as bucketized_column and crossed_column
-    Default behaviour is to return the original feature_column list as is
+    """ Use to define additional feature columns, such as bucketized_column, crossed_column,
+    and embedding_column. parameters.HYPER_PARAMS can be used to parameterise the creation
+    of the extended columns (e.g., embedding dimensions, number of buckets, etc.
+    Note that, extensions can be applied on features constructed in process_features function
+
+    Default behaviour is to return the original feature_columns list as-is.
 
     Args:
         feature_columns: [tf.feature_column] - list of base feature_columns to be extended
@@ -19,13 +40,15 @@ def extend_feature_columns(feature_columns):
         [tf.feature_column]: extended feature_column list
     """
 
-    # examples - given:
+    # # examples - given:
     # 'x' and 'y' are two numeric features:
     # 'alpha' and 'beta' are two categorical features
-
+    #
+    # # crossing
     # feature_columns['alpha_X_beta'] = tf.feature_column.crossed_column(
     #     [feature_columns['alpha'], feature_columns['beta']], 4)
     #
+    # # bucketization
     # num_buckets = parameters.HYPER_PARAMS.num_buckets
     # buckets = np.linspace(-2, 2, num_buckets).tolist()
     #
@@ -35,10 +58,13 @@ def extend_feature_columns(feature_columns):
     # feature_columns['y_bucketized'] = tf.feature_column.bucketized_column(
     #     feature_columns['y'], buckets)
     #
+    # # crossing bucketized columns
     # feature_columns['x_bucketized_X_y_bucketized'] = tf.feature_column.crossed_column(
     #     [feature_columns['x_bucketized'], feature_columns['y_bucketized']], int(1e4))
-
-    # note that, extensions can be applied on features constructed in process_features function
+    #
+    # # embedding
+    # feature_columns['x_bucketized_X_y_bucketized_embedded'] = tf.feature_column.embedding_column(
+    #     feature_columns['x_bucketized_X_y_bucketized'], dimension=parameters.HYPER_PARAMS.embedding_size)
 
     return feature_columns
 
@@ -70,17 +96,22 @@ def create_feature_columns():
         numeric_columns = {}
 
         for feature_name in numeric_feature_names:
-            # standard scaling
-            mean = feature_stats[feature_name]['mean']
-            stdv = feature_stats[feature_name]['stdv']
-            normalizer_fn = lambda x: (x - mean) / stdv
+            try:
+                # standard scaling
+                mean = feature_stats[feature_name]['mean']
+                stdv = feature_stats[feature_name]['stdv']
+                normalizer_fn = lambda x: (x - mean) / stdv
 
-            # max_min scaling
-            # min_value = feature_stats[feature_name]['min']
-            # max_value = feature_stats[feature_name]['max']
-            # normalizer_fn = lambda x: (x-min_value)/(max_value-min_value)
+                # max_min scaling
+                # min_value = feature_stats[feature_name]['min']
+                # max_value = feature_stats[feature_name]['max']
+                # normalizer_fn = lambda x: (x-min_value)/(max_value-min_value)
 
-            numeric_columns[feature_name] = tf.feature_column.numeric_column(feature_name, normalizer_fn=normalizer_fn)
+                numeric_columns[feature_name] = tf.feature_column.numeric_column(feature_name,
+                                                                                 normalizer_fn=normalizer_fn)
+            except:
+                numeric_columns[feature_name] = tf.feature_column.numeric_column(feature_name,
+                                                                                 normalizer_fn=None)
 
     # all the categorical feature with identity including the input and constructed ones
     categorical_feature_names_with_identity = metadata.INPUT_CATEGORICAL_FEATURE_NAMES_WITH_IDENTITY

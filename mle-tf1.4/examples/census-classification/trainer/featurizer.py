@@ -1,3 +1,19 @@
+#!/usr/bin/env python
+
+# Copyright 2017 Google Inc. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # **************************************************************************
 # YOU MAY IMPLEMENT extend_feature_columns FUCNTION TO ADD EXTENDED FEATURES
 # **************************************************************************
@@ -11,9 +27,13 @@ import input
 
 
 def extend_feature_columns(feature_columns):
-    """ Use to define additional feature columns, such as bucketized_column and crossed_column
-    Default behaviour is to return the original feature_column list as is
+    """ Use to define additional feature columns, such as bucketized_column, crossed_column,
+    and embedding_column. parameters.HYPER_PARAMS can be used to parameterise the creation
+    of the extended columns (e.g., embedding dimensions, number of buckets, etc.
+    Note that, extensions can be applied on features constructed in process_features function
 
+    Default behaviour is to return the original feature_columns list as-is.
+ 
     Args:
         feature_columns: [tf.feature_column] - list of base feature_columns to be extended
     Returns:

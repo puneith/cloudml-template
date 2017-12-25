@@ -14,17 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# ************************************************************************************
-# YOU MAY MODIFY THIS MODULE TO USE DIFFERENT ESTIMATORS OR CONFIGURE THE CURRENT ONES
-# ************************************************************************************
-# YOU NEED TO MODIFY THIS MODULE IF YOU WANT TO IMPLEMENT A CUSTOM ESTIMATOR
-# ************************************************************************************
 
 import tensorflow as tf
 
 import featurizer
-import parameters
+import task
 import metadata
+
+# ************************************************************************************
+# YOU MAY MODIFY THESE FUNCTIONS TO USE DIFFERENT ESTIMATORS OR CONFIGURE THE CURRENT ONES
+# ************************************************************************************
 
 
 def create_classifier(config):
@@ -42,8 +41,8 @@ def create_classifier(config):
         feature_columns
     )
 
-    linear_optimizer = tf.train.FtrlOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
-    dnn_optimizer = tf.train.AdagradOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
+    linear_optimizer = tf.train.FtrlOptimizer(learning_rate=task.HYPER_PARAMS.learning_rate)
+    dnn_optimizer = tf.train.AdagradOptimizer(learning_rate=task.HYPER_PARAMS.learning_rate)
 
     classifier = tf.estimator.DNNLinearCombinedClassifier(
 
@@ -60,7 +59,7 @@ def create_classifier(config):
 
         dnn_hidden_units=construct_hidden_units(),
         dnn_activation_fn=tf.nn.relu,
-        dnn_dropout=parameters.HYPER_PARAMS.dropout_prob,
+        dnn_dropout=task.HYPER_PARAMS.dropout_prob,
 
         config=config,
     )
@@ -71,7 +70,7 @@ def create_classifier(config):
 
 
 def create_regressor(config):
-    """ Create a DNNLinearCombinedRegressor based on the HYPER_PARAMS in the parameters module
+    """ Create a DNNLinearCombinedRegressor based on the HYPER_PARAMS in the task module
 
     Args:
         config - used for model directory
@@ -85,8 +84,8 @@ def create_regressor(config):
         feature_columns
     )
 
-    linear_optimizer = tf.train.FtrlOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
-    dnn_optimizer = tf.train.AdagradOptimizer(learning_rate=parameters.HYPER_PARAMS.learning_rate)
+    linear_optimizer = tf.train.FtrlOptimizer(learning_rate=task.HYPER_PARAMS.learning_rate)
+    dnn_optimizer = tf.train.AdagradOptimizer(learning_rate=task.HYPER_PARAMS.learning_rate)
 
     regressor = tf.estimator.DNNLinearCombinedRegressor(
 
@@ -100,7 +99,7 @@ def create_regressor(config):
 
         dnn_hidden_units=construct_hidden_units(),
         dnn_activation_fn=tf.nn.relu,
-        dnn_dropout=parameters.HYPER_PARAMS.dropout_prob,
+        dnn_dropout=task.HYPER_PARAMS.dropout_prob,
 
         config=config,
     )
@@ -108,6 +107,10 @@ def create_regressor(config):
     print("creating a regression model: {}".format(regressor))
 
     return regressor
+
+# ************************************************************************************
+# YOU NEED TO MODIFY THIS FUNCTIONS IF YOU WANT TO IMPLEMENT A CUSTOM ESTIMATOR
+# ************************************************************************************
 
 
 def create_estimator(config):
@@ -144,7 +147,7 @@ def create_estimator(config):
 
         # Create Optimiser
         optimizer = tf.train.AdamOptimizer(
-            learning_rate=parameters.HYPER_PARAMS.learning_rate)
+            learning_rate=task.HYPER_PARAMS.learning_rate)
 
         # Create training operation
         train_op = optimizer.minimize(
@@ -169,22 +172,27 @@ def create_estimator(config):
                                   config=config)
 
 
+# ************************************************************************************
+# THIS IS A HELPER FUNCTION TO CREATE GET THE HIDDEN LAYER UNITS
+# ************************************************************************************
+
+
 def construct_hidden_units():
     """ Create the number of hidden units in each layer
 
     if the HYPER_PARAMS.layer_sizes_scale_factor > 0 then it will use a "decay" mechanism
-    to define the number of units in each layer. Otherwise, parameters.HYPER_PARAMS.hidden_units
+    to define the number of units in each layer. Otherwise, task.HYPER_PARAMS.hidden_units
     will be used as-is.
 
     Returns:
         list of int
     """
-    hidden_units = list(map(int, parameters.HYPER_PARAMS.hidden_units.split(',')))
+    hidden_units = list(map(int, task.HYPER_PARAMS.hidden_units.split(',')))
 
-    if parameters.HYPER_PARAMS.layer_sizes_scale_factor > 0:
+    if task.HYPER_PARAMS.layer_sizes_scale_factor > 0:
         first_layer_size = hidden_units[0]
-        scale_factor = parameters.HYPER_PARAMS.layer_sizes_scale_factor
-        num_layers = parameters.HYPER_PARAMS.num_layers
+        scale_factor = task.HYPER_PARAMS.layer_sizes_scale_factor
+        num_layers = task.HYPER_PARAMS.num_layers
 
         hidden_units = [
             max(2, int(first_layer_size * scale_factor ** i))

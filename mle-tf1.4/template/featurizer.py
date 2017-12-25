@@ -14,21 +14,22 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# **************************************************************************
-# YOU MAY IMPLEMENT extend_feature_columns FUCNTION TO ADD EXTENDED FEATURES
-# **************************************************************************
 
 import tensorflow as tf
 from tensorflow.python.feature_column import feature_column
 
 import metadata
-import parameters
+import task
 import input
 
 
+# **************************************************************************
+# YOU MAY IMPLEMENT THUS FUNCTION TO ADD EXTENDED FEATURES
+# **************************************************************************
+
 def extend_feature_columns(feature_columns):
     """ Use to define additional feature columns, such as bucketized_column, crossed_column,
-    and embedding_column. parameters.HYPER_PARAMS can be used to parameterise the creation
+    and embedding_column. task.HYPER_PARAMS can be used to parameterise the creation
     of the extended columns (e.g., embedding dimensions, number of buckets, etc.
     Note that, extensions can be applied on features constructed in process_features function
 
@@ -49,7 +50,7 @@ def extend_feature_columns(feature_columns):
     #     [feature_columns['alpha'], feature_columns['beta']], 4)
     #
     # # bucketization
-    # num_buckets = parameters.HYPER_PARAMS.num_buckets
+    # num_buckets = task.HYPER_PARAMS.num_buckets
     # buckets = np.linspace(-2, 2, num_buckets).tolist()
     #
     # feature_columns['x_bucketized'] = tf.feature_column.bucketized_column(
@@ -64,9 +65,14 @@ def extend_feature_columns(feature_columns):
     #
     # # embedding
     # feature_columns['x_bucketized_X_y_bucketized_embedded'] = tf.feature_column.embedding_column(
-    #     feature_columns['x_bucketized_X_y_bucketized'], dimension=parameters.HYPER_PARAMS.embedding_size)
+    #     feature_columns['x_bucketized_X_y_bucketized'], dimension=task.HYPER_PARAMS.embedding_size)
 
     return feature_columns
+
+
+# **************************************************************************
+# YOU MAY NOT TO CHANGE THIS FUNCTION TO CREATE FEATURE COLUMNS
+# **************************************************************************
 
 
 def create_feature_columns():
@@ -148,6 +154,11 @@ def create_feature_columns():
 
     # add extended feature definitions before returning the feature_columns list
     return extend_feature_columns(feature_columns)
+
+
+# **************************************************************************
+# YOU MAY NOT TO CHANGE THIS FUNCTION TO DEFINE WIDE AND DEEP COLUMNS
+# **************************************************************************
 
 
 def get_deep_and_wide_columns(feature_columns, use_indicators=True, use_wide_columns=True):
